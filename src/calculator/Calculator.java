@@ -6,10 +6,10 @@ public class Calculator {
 
     public int boxesChecked(Input testCase) {
         int boxesChecked = 0;
-        if (testCase.blind = true) { boxesChecked++; }
-        if (testCase.over65 = true) { boxesChecked++; }
-        if (testCase.spouseBlind = true) { boxesChecked++; }
-        if (testCase.spouseOver65 = true) { boxesChecked++; }
+        if (testCase.blind == true) { boxesChecked++; }
+        if (testCase.over65 == true) { boxesChecked++; }
+        if (testCase.spouseBlind == true) { boxesChecked++; }
+        if (testCase.spouseOver65 == true) { boxesChecked++; }
 
         return boxesChecked;
     }
