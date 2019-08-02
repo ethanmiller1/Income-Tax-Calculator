@@ -4,28 +4,6 @@ import model.Input;
 
 public class Calculator {
 
-    public double calculateTax(Input testCase) {
-
-
-
-        // Line 6: Calculate Total Income.
-        double totalIncome = testCase.income + testCase.taxableInterest + testCase.ordinaryDividends + testCase.capitalGain;
-
-        // Line 7b: Calculate Adjusted Gross Income.
-        double adjustedIncome = totalIncome - testCase.incomeAdjustments;
-
-        // Line 8 - Calculate Standard Deduction.
-        double standardDeduction = standardDeduction(testCase);
-
-        // Line 10: Calculate Taxable Income.
-        double taxableIncome = adjustedIncome - standardDeduction;
-        if(taxableIncome < 0) { taxableIncome = 0; }
-
-
-
-        return 27475.00;
-    }
-
     public int boxesChecked(Input testCase) {
         int boxesChecked = 0;
         if (testCase.blind = true) { boxesChecked++; }
@@ -63,5 +41,56 @@ public class Calculator {
         }
 
         return standardDeduction;
+    }
+
+    public double taxDue(Input testCase) {
+        // Define tax brackets.
+        int[] singleIncomeBracket = new int[] {0, 9525, 38700, 82500, 157500, 200000, 500000};
+        int[] marriedIncomeBracket = new int[] {0, 19050, 77400, 165000, 315000, 400000, 600000};
+        double[] taxRate = new double[] {.10, .12, .22, .24, .32, .35, .37};
+        double taxDue = 0.0;
+
+        // If single...
+        if(testCase.filingStatus == 1)
+        {
+            for (int i = 0; testCase.taxableIncome > singleIncomeBracket[i]; i++)
+            {
+                // Define local variables.
+                double taxSegment = 0.0;
+                int thisBracketBottom = singleIncomeBracket[i];
+                int thisBracketTop = singleIncomeBracket[i+1];
+
+                // Apply this bracket's tax rate on any amount exceeding the previous tax bracket.
+                if(testCase.taxableIncome > thisBracketTop)
+                    taxSegment = (thisBracketTop - thisBracketBottom) *  taxRate[i];
+                else
+                    taxSegment = (testCase.taxableIncome - thisBracketBottom) * taxRate[i];
+
+                // Add the tax for each bracket to the total tax due.
+                taxDue += taxSegment;
+            }
+        }
+        // If married...
+        else
+        {
+            for (int i = 0; testCase.taxableIncome > marriedIncomeBracket[i]; i++)
+            {
+                // Define local variables.
+                double taxSegment = 0.0;
+                int thisBracketBottom = marriedIncomeBracket[i];
+                int thisBracketTop = marriedIncomeBracket[i+1];
+
+                // Apply this bracket's tax rate on any amount exceeding the previous tax bracket.
+                if(testCase.taxableIncome > thisBracketTop)
+                    taxSegment = (thisBracketTop - thisBracketBottom) *  taxRate[i];
+                else
+                    taxSegment = (testCase.taxableIncome - thisBracketBottom) * taxRate[i];
+
+                // Add the tax for each bracket to the total tax due.
+                taxDue += taxSegment;
+            }
+        }
+
+        return taxDue;
     }
 }

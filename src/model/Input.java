@@ -1,5 +1,7 @@
 package model;
 
+import calculator.Calculator;
+
 public class Input {
     public int filingStatus;
     public boolean blind;
@@ -7,6 +9,7 @@ public class Input {
     public boolean spouseBlind;
     public boolean spouseOver65;
     public double income;
+    public double totalIncome;
     public double taxExemptInterest;
     public double taxableInterest = 0;
     public double qualifiedDividends;
@@ -28,6 +31,20 @@ public class Input {
         this.taxExemptInterest = taxExemptInterest;
         this.qualifiedDividends = qualifiedDividends;
         this.incomeAdjustments = incomeAdjustments;
+
+        // Line 6: Calculate Total Income.
+        this.totalIncome = this.income + this.taxableInterest + this.ordinaryDividends + this.capitalGain;
+
+        // Line 7b: Calculate Adjusted Gross Income.
+        this.adjustedIncome = totalIncome - this.incomeAdjustments;
+
+        // Line 8 - Calculate Standard Deduction.
+        Calculator calculator = new Calculator();
+        this.standardDeduction = calculator.standardDeduction(this);
+
+        // Line 10: Calculate Taxable Income.
+        this.taxableIncome = adjustedIncome - standardDeduction;
+        if(taxableIncome < 0) { taxableIncome = 0; }
     }
 
 }
