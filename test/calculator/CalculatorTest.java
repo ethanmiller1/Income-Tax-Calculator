@@ -108,4 +108,23 @@ class CalculatorTest {
 
         assertEquals(expected, calculator.taxDue(testCase3));
     }
+
+    @Test
+    public void testCase4() {
+        Input testCase4 = new Input(
+                2,
+                false,
+                true,
+                true,
+                true,
+                400000.00,
+                20000.00,
+                80000.00,
+                12000.00
+        );
+
+        double expected = 78611.00;
+
+        assertEquals(expected, calculator.taxDue(testCase4));
+    }
 }
