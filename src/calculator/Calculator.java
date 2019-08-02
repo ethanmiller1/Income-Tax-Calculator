@@ -6,7 +6,22 @@ public class Calculator {
 
     public double calculateTax(Input testCase) {
 
-        int boxesChecked = boxesChecked(testCase);
+
+
+        // Line 6: Calculate Total Income.
+        double totalIncome = testCase.income + testCase.taxableInterest + testCase.ordinaryDividends + testCase.capitalGain;
+
+        // Line 7b: Calculate Adjusted Gross Income.
+        double adjustedIncome = totalIncome - testCase.incomeAdjustments;
+
+        // Line 8 - Calculate Standard Deduction.
+        double standardDeduction = standardDeduction(testCase);
+
+        // Line 10: Calculate Taxable Income.
+        double taxableIncome = adjustedIncome - standardDeduction;
+        if(taxableIncome < 0) { taxableIncome = 0; }
+
+
 
         return 27475.00;
     }
