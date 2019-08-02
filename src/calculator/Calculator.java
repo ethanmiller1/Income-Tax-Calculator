@@ -22,7 +22,31 @@ public class Calculator {
     }
 
     public double standardDeduction(Input testCase) {
+
+        // Initialize variables.
+        int standardDeduction = 0;
         int boxesChecked = boxesChecked(testCase);
-        return 0.00;
+
+        // If single, set corresponding standard deduction.
+        if (testCase.filingStatus == 1) {
+            switch(boxesChecked)
+            {
+                case 0:  standardDeduction = 12000; break;
+                case 1:  standardDeduction = 13600; break;
+                case 2:  standardDeduction = 15200; break;
+            }
+        // If married, set corresponding standard deduction.
+        } else {
+            switch(boxesChecked)
+            {
+                case 0:  standardDeduction = 24000; break;
+                case 1:  standardDeduction = 25300; break;
+                case 2:  standardDeduction = 26600; break;
+                case 3:  standardDeduction = 27900; break;
+                case 4:  standardDeduction = 29200; break;
+            }
+        }
+
+        return standardDeduction;
     }
 }
